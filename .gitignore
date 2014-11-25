@@ -1,0 +1,168 @@
+class Grafo:#crea una instancia de grafos
+	def __init__(self):
+		self.__listaVertices=[]
+	def __str__(self):
+		a=str(self.__listaVertices)
+		return a	
+	def agregarVertice(self,vertice):
+		self.__listaVertices.append(vertice)
+		
+	def conectar(self,origen,destino, peso):#conecto dos vertices y creo una arista
+		ar=Arista(destino,peso)
+		origen.agregarArista(ar)
+		
+	def getListaDeVertices(self):#retorno la lista de vertices del grafo
+		return self.__listaVertices
+		
+	def verticePosicion(self,posicion):#retorno la posicion del vertice
+		return self.getListaDeVertices()[posicion]
+			
+	def caminos(self):#creo caminos  
+		visitados=[]
+		caminos=[]
+		
+		#marco todos los vertices como no visitados
+		for i in (self.__listaVertices):
+			visitados.append(False)
+		for v in (self.__listaVertices):
+			camino=[]
+			self.__dfs(v,camino,caminos,visitados)
+				#se agrega el camino resultante a la lista de caminos
+			caminos.append(camino)
+		return caminos
+			
+						
+	def __dfs(self,origen,camino,caminos,visitados):#
+		visitados[origen.getPosicion()-1]=True#
+		camino.append(origen)
+		mayor=1
+		if mayor==0:
+			for t in(origen.getListaDeAdyacentes()):
+				if visitados[t.getVerticeDestino().getPosicion()-1]==False:
+			
+					camino.append(p.getVerticeDestino())
+					return caminos
+					#del (camino,origen)
+					mayor=mayor+1
+		if mayor !=0:
+			for a in (origen.getListaDeAdyacentes()):
+				if visitados[a.getVerticeDestino().getPosicion()-1]==False:
+					self.__dfs(a.getVerticeDestino(),camino,caminos,visitados)
+		visitados[origen.getPosicion()-1]=False
+		
+		return caminos,camino,visitados
+
+
+class Vertice:#crea una instancia de vertice 
+	def __init__(self,__dato,__posicion):
+		self.__listaAdyacentes=[]
+		self.__dato=__dato
+		self.__posicion=__posicion
+	def __str__(self):
+		a=str(self.__listaAdyacentes)+','+str(self.__dato)+','+str(self.__posicion)
+		return a
+	def agregarArista(self,arista):#agrega arista
+		self.__listaAdyacentes.append(arista)
+	def getDato(self):#devuelve el dato
+		return self.__dato
+	def getPosicion(self):#devuelve la posicion del dato
+		return self.__posicion
+	def getListaDeAdyacentes(self):#retorna la lista de adyacentes
+		return self.__listaAdyacentes
+	#def atyra(self):
+		#return self.__dato[3]
+		
+class Arista:#crea una instancia de arista
+	def __init__(self,destino,peso):
+		self.__destino=destino
+		self.__peso=peso
+	def __str__(self):
+		a=str(self.__destino)+','+str(self.__peso)
+	def getVerticeDestino(self):#retorna el vertice destino de la arista
+		return self.__destino
+	def getPeso(self):#retorna el peso
+		return self.__peso
+
+
+
+prueba=Grafo()
+
+
+#Ciudades		
+salta=Vertice(["Salta",5000000,"medio",False],1)
+mendoza=Vertice(["Mendoza",10000000,"alto",True],2)
+viedma=Vertice(["Viedma",500000,"medio",False],3)
+santaFe=Vertice(["Santa Fe",7500000,"medio",False],4)
+corrientes=Vertice(["Corrientes",5000000,"alto",True],5)
+buenosAires=Vertice(["Buenos Aires",15000000,"alto",True],6)
+cordoba=Vertice(["Cordoba",10000000,"alto",False],7)
+neuquen=Vertice(["Neuquen",5000000,"bajo",True],8)
+santaRosa=Vertice(["Santa Rosa",5000000,"bajo",False],9)
+jujuy=Vertice(["Jujuy",50000,"alto",True],10)
+posadas=Vertice(["Posadas",500000,"alto",True],11)
+tucuman=Vertice(["Tucuman",5000000,"bajo",False],12)
+catamarca=Vertice(["Catamarca",5000000,"medio",True],13)
+laRioja=Vertice(["La Rioja",5000000,"medio",False],14)
+santiago=Vertice(["Santiago del Estero",5000000,"alto",False],15)
+sanLuis=Vertice(["San Luis",10000000,"medio",False],16)
+formosa=Vertice(["Formosa",500000,"alto",True],17)
+resistencia=Vertice(["Resistencia",500000,"medio",False],18)
+sanJuan=Vertice(["San Juan",500000,"medio",True],19)
+parana=Vertice(["Parana",500000,"medio",False],20)
+rawson=Vertice(["Rawson",500000,"bajo",False],21)
+ushuaia=Vertice(["Ushuaia",500000,"bajo",True],22)
+rioGallegos=Vertice(["Rio Gallegos",500000,"bajo",False],23)
+
+
+#se agregan todas las ciudades al grafo
+
+for q in (salta,mendoza,viedma,santaFe,corrientes,buenosAires,cordoba,neuquen,santaRosa,
+jujuy,posadas,tucuman,catamarca,laRioja,santiago,sanLuis,formosa,resistencia,
+sanJuan,parana,rawson,ushuaia,rioGallegos):
+	prueba.agregarVertice(q)
+
+#adyacencias
+
+a1=[0,0,0,0,0,0,0,0,0,6,0,1,0,0,0,0,0,0,0,0,0,0,0]
+a2=[0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,2,0,0,0,0]
+a3=[0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,2,0,0]
+a4=[0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,2,0,5,0,0,0]
+a5=[0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,6,0,0,0,0,0]
+a6=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0]
+a7=[0,0,0,4,0,0,0,0,0,0,0,0,0,1,0,3,0,0,0,0,0,0,0]
+a8=[0,1,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+a9=[0,0,3,0,0,0,0,2,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0]
+a10=[6,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,3,0,0,0,0,0,0]
+a11=[0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+a12=[1,0,0,0,0,0,0,0,0,5,0,0,7,0,4,0,0,0,0,0,0,0,0]
+a13=[0,0,0,0,0,0,0,0,0,0,0,7,0,3,0,0,0,0,4,0,0,0,0]
+a14=[0,1,0,0,0,0,1,0,0,0,0,0,3,0,0,2,0,0,6,0,0,0,0]
+a15=[0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0]
+a16=[0,0,0,0,0,0,3,0,5,0,0,0,0,2,0,0,0,0,0,0,0,0,0]
+a17=[0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0]
+a18=[0,0,0,2,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+a19=[0,2,0,0,0,0,0,0,0,0,0,0,4,6,0,0,0,0,0,0,0,0,0]
+a20=[0,0,0,5,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+a21=[0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
+a22=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5]
+a23=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,5,0]
+#realizar las conexiones
+
+pos=0
+for i in (a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,
+a18,a19,a20,a21,a22,a23):
+	z=0
+	for a in(i):
+		if a >0:
+			prueba.conectar(prueba.verticePosicion(pos),prueba.verticePosicion(z),a)
+		z=z+1
+	pos=pos+1	
+#separa y muestra solo los nombres de ciudades en los caminos
+ruta=0
+for i in prueba.caminos():
+	separado=[]
+	for c in i:
+		separado.append(c.getDato()[0])
+	print "Camino a ",str(c.getDato()[0])
+	print separado
+	ruta = ruta + 1
